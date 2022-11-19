@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [author, setAuthor] = useState('mario');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,22 +13,22 @@ const Create = () => {
 
     fetch('http://localhost:8000/blogs/', {
       method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(blog)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(blog),
     }).then(() => {
       // history.go(-1);
-      history.push('/');
-    })
-  }
+      navigate('/');
+    });
+  };
 
   return (
-    <div className="create">
+    <div className='create'>
       <h2>Add a New Blog</h2>
       <form onSubmit={handleSubmit}>
         <label>Blog title:</label>
-        <input 
-          type="text" 
-          required 
+        <input
+          type='text'
+          required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -39,17 +39,14 @@ const Create = () => {
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
         <label>Blog author:</label>
-        <select
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        >
-          <option value="mario">mario</option>
-          <option value="yoshi">yoshi</option>
+        <select value={author} onChange={(e) => setAuthor(e.target.value)}>
+          <option value='mario'>mario</option>
+          <option value='yoshi'>yoshi</option>
         </select>
         <button>Add Blog</button>
       </form>
     </div>
   );
-}
- 
+};
+
 export default Create;
