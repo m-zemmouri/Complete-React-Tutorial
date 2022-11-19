@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const BlogCreate = () => {
   const [title, setTitle] = useState('');
@@ -11,14 +12,16 @@ const BlogCreate = () => {
     e.preventDefault();
     const blog = { title, body, author };
 
-    fetch('http://localhost:8000/blogs/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(blog),
-    }).then(() => {
-      // history.go(-1);
-      navigate('/');
-    });
+    axios.post('http://localhost:8000/blogs/', blog);
+    navigate('/');
+    // fetch('http://localhost:8000/blogs/', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(blog),
+    // }).then(() => {
+    //   // history.go(-1);
+    //   navigate('/');
+    // });
   };
 
   return (

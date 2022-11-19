@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
@@ -7,36 +8,30 @@ const useFetch = (url) => {
 
   useEffect(() => {
     const abortCont = new AbortController();
-
-    setTimeout(() => {
-      fetch(url, { signal: abortCont.signal })
-      .then(res => {
-        if (!res.ok) { // error coming back from server
-          throw Error('could not fetch the data for that resource');
-        } 
-        return res.json();
-      })
-      .then(data => {
+    async function fetchData() {
+      try {
+        const res = await axios(url, { signal: abortCont.signal });
         setIsPending(false);
-        setData(data);
+        setData(res.data);
         setError(null);
-      })
-      .catch(err => {
+      } catch (err) {
         if (err.name === 'AbortError') {
-          console.log('fetch aborted')
+          console.log('fetch aborted');
         } else {
           // auto catches network / connection error
           setIsPending(false);
           setError(err.message);
         }
-      })
-    }, 1000);
-
+      }
+    }
+    fetchData();
     // abort the fetch
-    return () => abortCont.abort();
-  }, [url])
+    return () => {
+      abortCont.abort();
+    };
+  }, [url]);
 
   return { data, isPending, error };
-}
- 
+};
+
 export default useFetch;
