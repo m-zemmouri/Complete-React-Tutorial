@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Create = () => {
+const BlogCreate = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [author, setAuthor] = useState('mario');
@@ -49,4 +49,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default BlogCreate;

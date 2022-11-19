@@ -5,7 +5,7 @@ const BlogList = ({ blogs }) => {
     <div className="blog-list">
       {blogs.map(blog => (
         <div className="blog-preview" key={blog.id} >
-          <Link to={`/blogs/${blog.id}`}>
+          <Link to={`/blog/${blog.id}`}>
             <h2>{ blog.title }</h2>
             <p>Written by { blog.author }</p>
           </Link>
@@ -14,5 +14,5 @@ const BlogList = ({ blogs }) => {
     </div>
   );
 }
- 
+
 export default BlogList;
